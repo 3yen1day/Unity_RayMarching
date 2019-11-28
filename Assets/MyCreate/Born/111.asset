@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3acd6fe57257048db802c1c4c2b75248, type: 3}
+  m_Name: 111
+  m_EditorClassIdentifier: 
+  shaderName: 111
+  shaderReference: {fileID: 4800000, guid: 83f2955f449dca34693c594e892b05a9, type: 3}
+  shaderTemplate: uRaymarching/Deferred/Standard
+  variables:
+  - key: Name
+    value: 111
+  - key: ObjectShape
+    value: CUBE
+  - key: RaymarchingShaderDirectory
+    value: Assets/uRaymarching/Shaders/Include
+  conditions:
+  - key: ShadowCaster
+    value: 0
+  - key: FullScreen
+    value: 0
+  - key: WorldSpace
+    value: 0
+  - key: FollowObjectScale
+    value: 0
+  - key: CameraInsideObject
+    value: 0
+  - key: UseRaymarchingDepth
+    value: 1
+  - key: FallbackToDiffuse
+    value: 1
+  - key: SphericalHarmonicsPerPixel
+    value: 1
+  - key: FallbackToStandardShader
+    value: 1
+  blocks:
+  - key: Properties
+    value: '// _Color2("Color2", Color) = (1.0, 1.0, 1.0, 1.0)
+
+      _SphereSize("SphereSize", Range(0, 10)) = 6.0
+
+      _Smooth("Smooth", Range(0, 10)) = 6.0
+
+      _Offset1("Offset1", Vector) = (0.0,1.0,0.0)
+
+      _Offset2("Offset2", Vector) = (0.0,-1.0,0.0)
+
+      _BoxParam("BoxParam", Vector) = (0.0,0.0,0.0)'
+    folded: 1
+  - key: DistanceFunction
+    value: "float3 _Offset1;\nfloat3 _Offset2;\nfloat _SphereSize;\nfloat _Smooth;\n\nfloat3
+      trans(float3 p){\nreturn fmod(p, 4.0) - 2.0;\n}\n\nfloat smoothMin(float d1,
+      float d2, float k){\n    float h = exp(-k * d1) + exp(-k * d2);\n    return
+      -log(h) / k;\n} \n\nfloat sdBox( float3 p)\n{\n    float3 q = abs(p);\n    return
+      length(max(q - float3(0.2, 0.2, 0.2), 0.0));\n}\n\nfloat Sphere1 (float3 p){\n
+      return length(p+_Offset1) - _SphereSize;\n}\n\nfloat Sphere2(float3 p){\n return
+      length(p+_Offset2) - _SphereSize;\n}\n\ninline float DistanceFunction(float3
+      pos)\n{\n_Smooth = 3.2 + sin(_Time*10.0)*2.4;\n\nfloat3 p = trans(pos);\n float
+      s1 = Sphere1 (pos);\n float s2 = Sphere2 (pos);\nfloat b1 = sdBox(pos);\n //return
+      Sphere1 (pos);\n // return  min(s1,s2);\n return smoothMin(smoothMin(s1,s2,_Smooth),b1,
+      9.0);\n}"
+    folded: 1
+  - key: PostEffect
+    value: 'inline void PostEffect(RaymarchInfo ray, inout PostEffectOutput o)
+
+      {
+
+      }'
+    folded: 0
+  constants: {fileID: 11400000, guid: 4df15a420345e4af98645ddd9620aa5b, type: 2}
+  basicFolded: 1
+  conditionsFolded: 1
+  variablesFolded: 0
+  materialsFolded: 0
+  constantsFolded: 0
