@@ -63,9 +63,9 @@ MonoBehaviour:
       length(max(q - float3(0.2, 0.2, 0.2), 0.0));\n}\n\nfloat Sphere1 (float3 p){\n
       return length(p+_Offset1) - _SphereSize;\n}\n\nfloat Sphere2(float3 p){\n return
       length(p+_Offset2) - _SphereSize;\n}\n\ninline float DistanceFunction(float3
-      pos)\n{\n_Smooth = 3.2 + sin(_Time*10.0)*2.4;\n\nfloat3 p = trans(pos);\n float
-      s1 = Sphere1 (pos);\n float s2 = Sphere2 (pos);\nfloat b1 = sdBox(pos);\n //return
-      Sphere1 (pos);\n // return  min(s1,s2);\n return smoothMin(smoothMin(s1,s2,_Smooth),b1,
+      pos)\n{\n_Smooth = 3.2 + sin(_Time*30.0+1.0)*2.4;\n\nfloat3 p = trans(pos);\n
+      float s1 = Sphere1 (pos);\n float s2 = Sphere2 (pos);\nfloat b1 = sdBox(pos);\n
+      //return Sphere1 (pos);\n // return  min(s1,s2);\n return smoothMin(smoothMin(s1,s2,_Smooth),b1,
       9.0);\n}"
     folded: 1
   - key: PostEffect

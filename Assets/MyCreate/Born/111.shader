@@ -83,7 +83,7 @@ float Sphere2(float3 p){
 
 inline float DistanceFunction(float3 pos)
 {
-_Smooth = 3.2 + sin(_Time*10.0)*2.4;
+_Smooth = 3.2 + sin(_Time*30.0+1.0)*2.4;
 
 float3 p = trans(pos);
  float s1 = Sphere1 (pos);
